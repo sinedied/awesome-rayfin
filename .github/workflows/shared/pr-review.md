@@ -10,10 +10,14 @@
 # reviewer reads the PR via GitHub tools and posts via safe-outputs; it never checks out
 # code, so the `github` toolset is limited to `pull_requests` (which needs only
 # `pull-requests: read`); `repos` is excluded because it would require `contents: read`.
+# `min-integrity: none` (not `lockdown: true`) is used so the reviewer runs on every PR
+# with the built-in Actions token — `lockdown: true` would require a separate PAT
+# (GH_AW_GITHUB_TOKEN), which we avoid. The agent is read-only and posts only sanitized
+# safe-outputs, so running on untrusted PRs is acceptable (a human maintainer has final say).
 tools:
   cache-memory: true
   github:
-    lockdown: true # Safe mode for untrusted PRs: read via API, never execute PR code.
+    min-integrity: none # Review any PR (incl. forks/external) with the built-in token; no PAT needed.
     toolsets: [pull_requests]
 
 safe-outputs:
