@@ -6,8 +6,8 @@
 tools:
   cache-memory: true
   github:
+    lockdown: true # Safe mode for reviewing PRs from untrusted contributors: read via API, no code execution.
     toolsets: [pull_requests, repos]
-    min-integrity: none # Reviews PRs from any contributor; output is gated through safe-outputs (read-only token, no code execution).
 
 safe-outputs:
   create-pull-request-review-comment:
@@ -20,6 +20,9 @@ safe-outputs:
     run-started: "👀 [{workflow_name}]({run_url}) is reviewing this PR..."
     run-success: "✅ [{workflow_name}]({run_url}) finished its review."
     run-failure: "⚠️ [{workflow_name}]({run_url}) {status}."
+
+# The reviewer reads the PR via GitHub MCP tools (diff/files) and posts via safe-outputs;
+# it never needs a local clone. `checkout: false` lives in the importing workflows (below).
 
 imports:
   - .github/workflows/shared/reporting.md
