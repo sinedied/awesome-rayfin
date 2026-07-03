@@ -11,6 +11,7 @@ permissions:
   contents: read
   pull-requests: read
   actions: read
+  copilot-requests: write # Native billing: use the Actions token for Copilot inference (billed to the org), no PAT needed.
 
 timeout-minutes: 15
 

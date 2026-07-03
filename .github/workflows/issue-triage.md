@@ -11,7 +11,12 @@ on:
     types: [opened, reopened]
   reaction: eyes
 
-permissions: read-all
+permissions:
+  contents: read
+  issues: read
+  pull-requests: read
+  actions: read
+  copilot-requests: write # Native billing: use the Actions token for Copilot inference (billed to the org), no PAT needed.
 
 network: defaults
 
